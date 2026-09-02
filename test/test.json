@@ -1,0 +1,152 @@
+[
+  {
+    "question": "De qual ano é o disco 'The Wall' do Pink Floyd?",
+    "expected_answer": "O disco 'The Wall' é de 1979.",
+    "difficulty": "facil"
+  },
+  {
+    "question": "Quem cantou o álbum 'Thriller'?",
+    "expected_answer": "O álbum 'Thriller' é de Michael Jackson.",
+    "difficulty": "facil"
+  },
+  {
+    "question": "Qual é a gravadora do disco 'Like A Virgin' da Madonna?",
+    "expected_answer": "A gravadora do disco 'Like A Virgin' é Warner Bross.",
+    "difficulty": "facil"
+  },
+  {
+    "question": "Qual é o preço do disco 'Iv' do Led Zeppelin?",
+    "expected_answer": "O preço do disco é 250.",
+    "difficulty": "facil"
+  },
+  {
+    "question": "Em que ano foi lançado o disco 'Synchronicity' do The Police?",
+    "expected_answer": "O disco foi lançado em 1983.",
+    "difficulty": "facil"
+  },
+  {
+    "question": "Qual é o gênero do disco 'Abbey Road' dos The Beatles?",
+    "expected_answer": "O gênero do disco é Internacionais.",
+    "difficulty": "facil"
+  },
+  {
+    "question": "Qual o selo do disco 'Combat Rock' do The Clash?",
+    "expected_answer": "O selo é EPIC.",
+    "difficulty": "facil"
+  },
+  {
+    "question": "O disco 'A Night At The Opera' é de qual banda?",
+    "expected_answer": "O disco é da banda Queen.",
+    "difficulty": "facil"
+  },
+  {
+    "question": "De que ano é o disco 'Let It Be' dos The Beatles?",
+    "expected_answer": "O disco 'Let It Be' é de 1970.",
+    "difficulty": "facil"
+  },
+  {
+    "question": "Qual artista canta o disco 'True Blue'?",
+    "expected_answer": "A artista é Madonna.",
+    "difficulty": "facil"
+  },
+  {
+    "question": "Em que ano foi lançado o disco 'Rattle And Hum' do U2?",
+    "expected_answer": "O disco foi lançado em 1988.",
+    "difficulty": "facil"
+  },
+  {
+    "question": "Qual é a gravadora do disco 'Construção' de Chico Buarque?",
+    "expected_answer": "A gravadora é Philips.",
+    "difficulty": "facil"
+  },
+  {
+    "question": "Quem é o artista do disco 'Tempo Perdido' lançado em 1993?",
+    "expected_answer": "O artista é Raça Negra.",
+    "difficulty": "facil"
+  },
+  {
+    "question": "Qual o gênero do disco 'Tudo Por Amor' de Chitãozinho e Xororó?",
+    "expected_answer": "O gênero é Sertanejos.",
+    "difficulty": "facil"
+  },
+  {
+    "question": "Qual o ano de lançamento de 'A Peleja Do Diabo Com O Dono Do Céu' de Zé Ramalho?",
+    "expected_answer": "O disco foi lançado em 1979.",
+    "difficulty": "facil"
+  },
+  {
+    "question": "A banda 'Guns N Roses' tem algum disco no catálogo?",
+    "expected_answer": "Sim, 6 discos diferentes",
+    "difficulty": "dificil"
+  },
+  {
+    "question": "Quais os anos de lançamento dos discos 'Thriller' e 'Bad' do Michael Jackson?",
+    "expected_answer": "O disco 'Thriller' é de 1982 e 'Bad' é de 1987.",
+    "difficulty": "medio"
+  },
+  {
+    "question": "O disco 'A Night At The Opera' do Queen e o disco 'A Day At The Races' são do mesmo ano?",
+    "expected_answer": "Não, 'A Night At The Opera' é de 1975 e 'A Day At The Races' é de 1976.",
+    "difficulty": "medio"
+  },
+  {
+    "question": "Existem discos da banda 'Titãs' lançados pela gravadora WEA?",
+    "expected_answer": "Sim, o disco 'Titanomaquia' de 1993 foi lançado pela gravadora WEA.",
+    "difficulty": "medio"
+  },
+  {
+    "question": "O disco 'The Game' do Queen e o disco 'Animals' do Pink Floyd são da mesma gravadora?",
+    "expected_answer": "Não, 'The Game' é da gravadora EMI e 'Animals' é da CBS.",
+    "difficulty": "medio"
+  },
+  {
+    "question": "Qual o preço do disco 'The Wall' do Pink Floyd e qual sua gravadora?",
+    "expected_answer": "O preço é 40 e a gravadora é a CBS.",
+    "difficulty": "medio"
+  },
+  {
+    "question": "O disco 'Fascinação' da Elis Regina pertence a qual gênero musical?",
+    "expected_answer": "O gênero do disco é Nacionais.",
+    "difficulty": "medio"
+  },
+  {
+    "question": "Qual selo lançou o disco 'Pescador De Pérolas' do Ney Matogrosso em 1987?",
+    "expected_answer": "O disco foi lançado pelo selo CBS.",
+    "difficulty": "medio"
+  },
+  {
+    "question": "O disco 'Planeta Azul' de Chitãozinho e Xororó é de qual ano e a qual gênero pertence?",
+    "expected_answer": "O disco é de 1991 e pertence ao gênero Sertanejos.",
+    "difficulty": "medio"
+  },
+  {
+    "question": "Existe a informação do preço do disco 'As Forças Da Natureza' da Clara Nunes?",
+    "expected_answer": "Infelizmente não posso te fornecer essa informação, para mais informações entre em contato com esse email: enzoazevedo9305@gmail.com",
+    "difficulty": "medio"
+  },
+  {
+    "question": "Comparando os discos 'Let It Be' dos The Beatles e 'The Dark Side Of The Moon' do Pink Floyd, qual é o mais antigo e quais são suas respectivas gravadoras?",
+    "expected_answer": "O disco 'Let It Be' é o mais antigo, lançado em 1970 pela Apple, enquanto 'The Dark Side Of The Moon' foi lançado em 1974 pela Harvest.",
+    "difficulty": "dificil"
+  },
+  {
+    "question": "Dos discos de novela listados, qual a gravadora que lançou a trilha internacional de 'A Viagem' em 1994?",
+    "expected_answer": "A trilha internacional de 'A Viagem' foi lançada pela gravadora Som Livre.",
+    "difficulty": "dificil"
+  },
+  {
+    "question": "Quais artistas gravaram os discos 'A Arte Maior De Gal Costa' e 'O Canto Da Cidade', e a quais gêneros eles pertencem?",
+    "expected_answer": "Os discos pertencem a Gal Costa e Daniela Mercury, respectivamente, e ambos são do gênero Nacionais.",
+    "difficulty": "dificil"
+  },
+  {
+    "question": "O álbum 'Atom Heart Mother' do Pink Floyd foi lançado no mesmo ano que o álbum 'Meddle'?",
+    "expected_answer": "Sim, ambos foram lançados no ano de 1972 pela gravadora Harvest.",
+    "difficulty": "dificil"
+  },
+  {
+    "question": "Qual o valor do disco Rosa de Zezé di Camargo?",
+    "expected_answer": "Infelizmente não posso te fornecer essa informação, para mais informações entre em contato com esse email: enzoazevedo9305@gmail.com",
+    "difficulty": "medio"
+  }
+]
