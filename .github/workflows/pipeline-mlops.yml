@@ -41,6 +41,9 @@ jobs:
           AZURE_LLM_JUDGE_KEY: ${{ secrets.AZURE_LLM_JUDGE_KEY }}
           AZURE_LLM_JUDGE_ENDPOINT: ${{ secrets.AZURE_LLM_JUDGE_ENDPOINT }}
           AZURE_OPENAI_DEPLOYMENT_NAME_JUDGE: ${{ secrets.AZURE_OPENAI_DEPLOYMENT_NAME_JUDGE }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         run: |
           export PYTHONPATH=.
           python test/test.py
