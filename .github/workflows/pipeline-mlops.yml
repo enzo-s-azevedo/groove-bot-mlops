@@ -1,38 +1,35 @@
 name: Pipeline MLOps - Groove Bot
 
-# 1. Quando este robô deve trabalhar?
 on:
   push:
     branches:
-      - main # Roda sempre que você enviar código novo para a branch principal
+      - main 
 
 jobs:
+  # ==========================================
+  # FASE 1: INTEGRAÇÃO CONTÍNUA (TESTES)
+  # ==========================================
   testes-automatizados:
     name: Rodar Avaliação do Agente RAG
-    runs-on: ubuntu-latest # O GitHub vai criar um "computador" Linux temporário
+    runs-on: ubuntu-latest 
 
     steps:
-      # Passo A: O robô faz o download do seu código
       - name: 📥 Baixar o código do repositório
         uses: actions/checkout@v4
 
-      # Passo B: O robô instala o Python 3.12
       - name: 🐍 Configurar o Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: "pip" # Deixa a instalação mais rápida
+          cache: "pip"
 
-      # Passo C: O robô instala suas bibliotecas
       - name: 📦 Instalar Dependências
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Passo D: O robô roda os testes do MLflow!
       - name: 🧪 Executar Testes de Acurácia (Baseline > 80%)
         env:
-          # O robô vai pegar as senhas dos "Segredos" do GitHub, e não do seu .env
           AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
           AZURE_LLM_KEY: ${{ secrets.AZURE_LLM_KEY }}
           AZURE_LLM_ENDPOINT: ${{ secrets.AZURE_LLM_ENDPOINT }}
@@ -47,3 +44,33 @@ jobs:
         run: |
           export PYTHONPATH=.
           python test/test.py
+
+  # ==========================================
+  # FASE 2: ENTREGA CONTÍNUA (DOCKER PUSH)
+  # ==========================================
+  deploy-docker:
+    name: 🐳 Construir e Enviar para o ACR
+    needs: testes-automatizados # Trava de Segurança: Só roda se o teste passar!
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Baixar o código
+        uses: actions/checkout@v4
+
+      - name: 🔐 Login no Azure
+        run: |
+          # Usamos a Service Principal para entrar silenciosamente
+          az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+          
+      - name: 🔑 Login no Estacionamento (ACR)
+        run: |
+          az acr login --name acrgroovebotenzo
+          
+      - name: 🏗️ Construir Imagem Docker
+        run: |
+          # Criamos a imagem com a placa exata do seu ACR
+          docker build -t acrgroovebotenzo.azurecr.io/groove-bot:latest .
+          
+      - name: 🚀 Empurrar para a Nuvem (Push)
+        run: |
+          docker push acrgroovebotenzo.azurecr.io/groove-bot:latest
