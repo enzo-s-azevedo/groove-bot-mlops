@@ -42,6 +42,5 @@ jobs:
           AZURE_LLM_JUDGE_ENDPOINT: ${{ secrets.AZURE_LLM_JUDGE_ENDPOINT }}
           AZURE_OPENAI_DEPLOYMENT_NAME_JUDGE: ${{ secrets.AZURE_OPENAI_DEPLOYMENT_NAME_JUDGE }}
         run: |
-          # Aqui ele roda o seu script de teste. 
-          # Se o script falhar (ou tirar nota baixa, dependendo da sua regra de assert), o GitHub barra o processo.
-          python test.py
+          export PYTHONPATH=.
+          python test/NOME_DO_SEU_ARQUIVO.py
