@@ -43,4 +43,4 @@ jobs:
           AZURE_OPENAI_DEPLOYMENT_NAME_JUDGE: ${{ secrets.AZURE_OPENAI_DEPLOYMENT_NAME_JUDGE }}
         run: |
           export PYTHONPATH=.
-          python test/NOME_DO_SEU_ARQUIVO.py
+          python test/test.py
