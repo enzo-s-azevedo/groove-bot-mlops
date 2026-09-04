@@ -35,14 +35,32 @@ NÃO forneça explicações, apenas SIM ou NÃO.
 """
 
 # ==========================================
+# FUNÇÃO: BUSCAR O CAMPEÃO (BASELINE)
+# ==========================================
+def obter_nota_do_campeao(client, experiment_id, nome_da_metrica="taxa_acerto_percentual"):
+    """
+    Procura no histórico do Azure ML qual foi a melhor nota já registrada 
+    para este experimento.
+    """
+    runs = client.search_runs(
+        experiment_ids=[experiment_id],
+        order_by=[f"metrics.{nome_da_metrica} DESC"],
+        max_results=1
+    )
+    
+    # Se não houver histórico (primeira vez), a baseline é 50%
+    if not runs:
+        return 50.0
+        
+    return runs[0].data.metrics.get(nome_da_metrica, 50.0)
+
+# ==========================================
 # MOTOR DE AVALIAÇÃO COM MLFLOW (AZURE)
 # ==========================================
 def executar_avaliacao_mlflow_azure():
-    # Conecta o MLflow ao servidor do Azure Machine Learning
     tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
     mlflow.set_tracking_uri(tracking_uri)
 
-    # Instancia o Client para gerenciar o estado na nuvem
     client = MlflowClient()
 
     # Gerencia o Experimento
@@ -54,14 +72,17 @@ def executar_avaliacao_mlflow_azure():
     else:
         experiment_id = experimento.experiment_id
 
-    # Cria uma nova execução (Run) dentro do Azure ML
+    # 1. BUSCA O CAMPEÃO ANTES DE COMEÇAR O NOVO TESTE
+    nota_campeao = obter_nota_do_campeao(client, experiment_id, "taxa_acerto_percentual")
+    print(f"🏆 Campeão Atual (Produção): {nota_campeao:.1f}%\n")
+
+    # Cria uma nova execução (Run) dentro do Azure ML para o Desafiante
     run = client.create_run(experiment_id, run_name="Avaliacao_Juiz")
     run_id = run.info.run_id
 
     print(f"🔗 Conectado ao Azure ML! Run ID: {run_id}")
 
     try:
-        # Carrega o Golden Dataset (garanta que o nome do arquivo bate com o JSON criado)
         with open("test/test.json", "r", encoding="utf-8") as f:
             dataset = json.load(f)
 
@@ -74,7 +95,7 @@ def executar_avaliacao_mlflow_azure():
         # Loga os parâmetros de engenharia no Azure
         client.log_param(run_id, "modelo_agente", os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"))
         client.log_param(run_id, "modelo_juiz", os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME_JUDGE"))
-        client.log_param(run_id, "versao_api_juiz", "2025-08-07")
+        client.log_param(run_id, "versao_api_juiz", "2024-12-01-preview")
         client.log_param(run_id, "tamanho_dataset", total)
         client.log_param(run_id, "metodo_avaliacao", "LLM-as-a-Judge")
 
@@ -87,7 +108,6 @@ def executar_avaliacao_mlflow_azure():
 
             # ETAPA A: O Agente RAG pesquisa e gera a resposta
             try:
-                # O input respeita a tipagem AgentState do LangGraph
                 resultado_agente = rag_agent.invoke({"messages": [("user", pergunta)]})
                 resposta_agente = resultado_agente["messages"][-1].content
             except Exception as e:
@@ -120,7 +140,7 @@ def executar_avaliacao_mlflow_azure():
                 "veredito_juiz": veredito
             })
 
-        # Calcula a métrica final de performance
+        # Calcula a métrica final do Desafiante
         taxa_acerto = (acertos / total) * 100
 
         # Envia as métricas finais para o painel do Azure ML
@@ -134,20 +154,30 @@ def executar_avaliacao_mlflow_azure():
             json.dump({"resultados": resultados_detalhados}, f, indent=4, ensure_ascii=False)
             
         client.log_artifact(run_id, temp_file)
-        os.remove(temp_file) # Mantém a máquina local limpa
+        os.remove(temp_file) 
 
-        # Encerra a execução com status de SUCESSO
-        client.set_terminated(run_id, status="FINISHED")
-        
+        # ==========================================
+        # O VEREDITO FINAL DA ARENA
+        # ==========================================
         print("-" * 50)
-        print(f"📊 AVALIAÇÃO CONCLUÍDA! Taxa de Acerto: {taxa_acerto:.1f}%")
-        print("☁️ Todos os logs e artefatos foram salvos no Azure Machine Learning.")
+        print("⚔️ BATALHA FINAL: CAMPEÃO VS DESAFIANTE ⚔️")
+        print(f"🏆 Campeão (Produção) : {nota_campeao:.1f}%")
+        print(f"🥊 Desafiante (Novo)  : {taxa_acerto:.1f}%")
         print("-" * 50)
+
+        if taxa_acerto >= nota_campeao:
+            print("\n✅ SUCESSO: O Desafiante superou/empatou com o Campeão! Deploy Autorizado.")
+            client.set_terminated(run_id, status="FINISHED")
+            sys.exit(0) # Retorna "Verde" para o GitHub (Avança para o Docker)
+        else:
+            print("\n❌ FALHA: O Desafiante piorou o modelo. Protegendo a produção e cancelando Deploy!")
+            client.set_terminated(run_id, status="FAILED") # Marca no Azure que a run foi reprovada
+            sys.exit(1) # Retorna "Vermelho" para o GitHub (Trava tudo)
 
     except Exception as e:
-        # Informa ao Azure que o teste quebrou no meio da execução
         client.set_terminated(run_id, status="FAILED")
         print(f"\n❌ Erro crítico durante a avaliação: {e}")
+        sys.exit(1) # Garante que o pipeline trave caso dê erro de código
 
 if __name__ == "__main__":
     executar_avaliacao_mlflow_azure()
