@@ -1,0 +1,10 @@
+### Testando o Health Check
+GET http://127.0.0.1:8000/
+
+### Testando o Agente LangGraph
+POST http://127.0.0.1:8000/chat
+Content-Type: application/json
+
+{
+  "pergunta": "Qual disco do genêro Sertanejo posso comprar com R$ 50,00?"
+}

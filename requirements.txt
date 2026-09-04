@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pydantic
+python-dotenv
+langchain
+langchain-openai
+langgraph
+mlflow
+azureml-mlflow
