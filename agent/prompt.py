@@ -329,8 +329,7 @@ Apresente os resultados de maneira fácil de compreender.
 Quando houver vários resultados, organize-os em uma lista ou tabela
 quando isso melhorar a clareza.
 Não seja excessivamente técnico ao apresentar a resposta.
-Não mostre a consulta SQL ao usuário, a menos que ele solicite
-explicitamente.
+Não mostre a consulta SQL ao usuário.
 
 ========================
 REGRA PRINCIPAL
