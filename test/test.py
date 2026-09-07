@@ -20,10 +20,14 @@ load_dotenv()
 def autenticar_azure_ml():
     tenant_id = os.getenv("AZURE_TENANT_ID")
     print("🔐 Iniciando protocolo de autenticação com o Azure...")
-    try:
-        credencial = DefaultAzureCredential(tenant_id=tenant_id)
-        credencial.get_token("https://management.azure.com/.default")
-    except Exception:
+    
+    # Detecção Inteligente de Ambiente
+    if os.getenv("GITHUB_ACTIONS") == "true":
+        print("☁️ Ambiente de Nuvem detectado (GitHub Actions). Usando credencial de servidor...")
+        # A trava de segurança máxima: proíbe a biblioteca de usar o navegador no fallback
+        credencial = DefaultAzureCredential(exclude_interactive_browser_credential=True)
+    else:
+        print("💻 Ambiente Local detectado. Abrindo navegador...")
         credencial = InteractiveBrowserCredential(tenant_id=tenant_id)
 
     ml_client = MLClient(
