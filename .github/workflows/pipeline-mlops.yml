@@ -30,20 +30,20 @@ jobs:
 
       - name: 🧪 Executar Testes de Acurácia (Baseline > 80%)
         env:
-          AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
-          AZURE_LLM_KEY: ${{ secrets.AZURE_LLM_KEY }}
-          AZURE_LLM_ENDPOINT: ${{ secrets.AZURE_LLM_ENDPOINT }}
-          AZURE_OPENAI_DEPLOYMENT_NAME: ${{ secrets.AZURE_OPENAI_DEPLOYMENT_NAME }}
-          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
-          AZURE_LLM_JUDGE_KEY: ${{ secrets.AZURE_LLM_JUDGE_KEY }}
-          AZURE_LLM_JUDGE_ENDPOINT: ${{ secrets.AZURE_LLM_JUDGE_ENDPOINT }}
-          AZURE_OPENAI_DEPLOYMENT_NAME_JUDGE: ${{ secrets.AZURE_OPENAI_DEPLOYMENT_NAME_JUDGE }}
-          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
-          AZURE_WORKSPACE_NAME: ${{ secrets.AZURE_WORKSPACE_NAME }}
+           AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+           AZURE_LLM_KEY: ${{ secrets.AZURE_LLM_KEY }}
+           AZURE_LLM_ENDPOINT: ${{ secrets.AZURE_LLM_ENDPOINT }}
+           AZURE_OPENAI_DEPLOYMENT_NAME: ${{ secrets.AZURE_OPENAI_DEPLOYMENT_NAME }}
+           MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+           AZURE_LLM_JUDGE_KEY: ${{ secrets.AZURE_LLM_JUDGE_KEY }}
+           AZURE_LLM_JUDGE_ENDPOINT: ${{ secrets.AZURE_LLM_JUDGE_ENDPOINT }}
+           AZURE_OPENAI_DEPLOYMENT_NAME_JUDGE: ${{ secrets.AZURE_OPENAI_DEPLOYMENT_NAME_JUDGE }}
+           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+           AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+           AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+           AZURE_WORKSPACE_NAME: ${{ secrets.AZURE_WORKSPACE_NAME }}
         run: |
           export PYTHONPATH=.
           python test/test.py
