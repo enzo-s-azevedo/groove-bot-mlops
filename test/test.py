@@ -46,26 +46,95 @@ juiz_llm = AzureChatOpenAI(
 )
 
 PROMPT_JUIZ = """
-Você é um avaliador rigoroso de sistemas de IA (LLM-as-a-Judge).
+Você é um Especialista em Avaliação de Sistemas de IA (LLM-as-a-Judge).
 
-Compare a RESPOSTA DO AGENTE com a RESPOSTA ESPERADA e determine se a resposta do agente está correta.
+Sua tarefa é comparar a RESPOSTA DO AGENTE com a RESPOSTA ESPERADA (GABARITO)
+e determinar se a resposta do agente atende corretamente à pergunta.
 
 REGRAS:
-1. Avalie precisão factual e equivalência semântica, não similaridade textual.
-2. Ignore diferenças de formatação, pontuação, maiúsculas/minúsculas, redação e sinônimos.
-3. Todas as informações essenciais do gabarito devem estar presentes e corretas.
-4. Respostas parcialmente corretas devem ser classificadas como NÃO.
-5. Valores, datas, nomes, preços, quantidades e outros dados específicos devem estar corretos.
-6. Qualquer informação incorreta ou contradição relevante torna a resposta NÃO.
-7. Informações adicionais são permitidas somente se não forem incorretas ou contraditórias.
-8. Se a resposta não responder diretamente à pergunta, classifique como NÃO.
-9. Não exija que a resposta seja textual ou estruturalmente idêntica ao gabarito.
+
+1. Avalie principalmente a CORREÇÃO FACTUAL e a EQUIVALÊNCIA SEMÂNTICA,
+e não a similaridade textual.
+
+2. Considere como CORRETA (SIM) uma resposta que transmita corretamente
+a mesma informação essencial do gabarito, mesmo que utilize palavras,
+estruturas, ordem ou expressões diferentes.
+
+3. Ignore diferenças irrelevantes de:
+
+- formatação;
+- pontuação;
+- maiúsculas/minúsculas;
+- redação;
+- ordem das informações;
+- sinônimos;
+- pequenas variações linguísticas.
+
+4. A resposta deve conter a informação central necessária para responder
+à pergunta. Não exija que ela seja idêntica ao gabarito.
+
+5. Informações adicionais são PERMITIDAS quando forem corretas, relevantes
+e compatíveis com o gabarito.
+
+Por exemplo, se o gabarito informa apenas o preço e o agente também informa
+corretamente o ano, selo ou gravadora obtidos do banco, classifique como SIM.
+
+6. NÃO penalize o agente por fornecer contexto adicional útil, desde que
+esse contexto não contradiga o gabarito nem introduza informações incorretas.
+
+7. Classifique como NÃO quando ocorrer qualquer uma das seguintes situações:
+
+- erro factual relevante;
+- contradição com o gabarito;
+- ausência de uma informação essencial;
+- resposta que não atende à pergunta;
+- informação adicional incorreta que comprometa a resposta.
+
+8. Pequenas diferenças de redação NÃO devem gerar falso negativo.
+
+9. Valores, datas, nomes, preços, quantidades e outros dados objetivos
+devem estar corretos quando forem essenciais à resposta.
+
+10. Se o gabarito contiver uma informação específica e o agente apresentar
+essa mesma informação corretamente, considere a resposta correta mesmo que
+a redação seja diferente.
+
+11. Não exija correspondência textual entre a resposta do agente e o gabarito.
+
+12. Não penalize uma resposta por ser mais detalhada que o gabarito quando
+as informações adicionais forem corretas e não contraditórias.
+
+13. Respostas parcialmente corretas devem ser classificadas como NÃO apenas
+quando faltar uma informação essencial necessária para responder corretamente
+à pergunta.
+
+14. Uma resposta pode ser considerada SIM mesmo quando não reproduzir todas
+as palavras ou informações secundárias do gabarito, desde que a informação
+central exigida esteja correta.
+
+========================
+CRITÉRIO FINAL
+========================
+
+SIM = A resposta atende corretamente à pergunta e contém a informação
+essencial correta, permitindo variações de redação e informações adicionais
+corretas.
+
+NÃO = A resposta possui erro factual relevante, contradição, omite informação
+essencial ou não responde adequadamente à pergunta.
 
 SAÍDA:
-Se estiver correta, responda EXATAMENTE: SIM
-Caso contrário, responda EXATAMENTE: NÃO
 
-Responda SOMENTE com SIM ou NÃO. Não forneça explicações ou qualquer outro texto.
+Se a resposta do agente estiver correta, responda EXATAMENTE:
+
+SIM
+
+Caso contrário, responda EXATAMENTE:
+
+NÃO
+
+Responda SOMENTE com SIM ou NÃO.
+Não forneça explicações ou qualquer outro texto.
 """
 
 def obter_nota_do_campeao(client, experiment_id):

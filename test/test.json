@@ -91,7 +91,7 @@
   },
   {
     "question": "Existem discos da banda 'Titãs' lançados pela gravadora WEA?",
-    "expected_answer": "Sim, o disco 'Titanomaquia' de 1993 foi lançado pela gravadora WEA.",
+    "expected_answer": "Sim, existem dois discos, o disco 'Titanomaquia' e o disco 'Tudo Ao Mesmo Tempo Agora'.",
     "difficulty": "medio"
   },
   {

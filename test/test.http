@@ -1,8 +1,8 @@
-### Testando o Health Check
-GET http://127.0.0.1:8000/
+### Testando o Health Check (Nuvem)
+GET https://api-groove-bot-enzo-dxckg0brada4gng7.centralus-01.azurewebsites.net/
 
-### Testando o Agente LangGraph
-POST http://127.0.0.1:8000/chat
+### Testando o Agente LangGraph (Nuvem)
+POST https://api-groove-bot-enzo-dxckg0brada4gng7.centralus-01.azurewebsites.net/chat
 Content-Type: application/json
 
 {
