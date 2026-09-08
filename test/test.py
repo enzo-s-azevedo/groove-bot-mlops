@@ -46,26 +46,156 @@ juiz_llm = AzureChatOpenAI(
 )
 
 PROMPT_JUIZ = """
-Você é um avaliador rigoroso de sistemas de IA (LLM-as-a-Judge).
+Você é um avaliador de respostas de um agente que consulta um catálogo de discos.
 
-Compare a RESPOSTA DO AGENTE com a RESPOSTA ESPERADA e determine se a resposta do agente está correta.
+Sua tarefa é decidir se a resposta do agente responde corretamente à pergunta do usuário.
 
-REGRAS:
-1. Avalie precisão factual e equivalência semântica, não similaridade textual.
-2. Ignore diferenças de formatação, pontuação, maiúsculas/minúsculas, redação e sinônimos.
-3. Todas as informações essenciais do gabarito devem estar presentes e corretas.
-4. Respostas parcialmente corretas devem ser classificadas como NÃO.
-5. Valores, datas, nomes, preços, quantidades e outros dados específicos devem estar corretos.
-6. Qualquer informação incorreta ou contradição relevante torna a resposta NÃO.
-7. Informações adicionais são permitidas somente se não forem incorretas ou contraditórias.
-8. Se a resposta não responder diretamente à pergunta, classifique como NÃO.
-9. Não exija que a resposta seja textual ou estruturalmente idêntica ao gabarito.
+Responda EXATAMENTE com:
 
-SAÍDA:
-Se estiver correta, responda EXATAMENTE: SIM
-Caso contrário, responda EXATAMENTE: NÃO
+SIM
 
-Responda SOMENTE com SIM ou NÃO. Não forneça explicações ou qualquer outro texto.
+ou
+
+NÃO
+
+Não escreva nenhuma explicação adicional.
+
+## REGRA PRINCIPAL
+
+Avalie o significado da resposta, não a correspondência literal com o gabarito.
+
+A resposta é SIM quando contém a informação central necessária para responder à pergunta e essa informação está correta.
+
+Ignore diferenças de:
+
+* capitalização
+* pontuação
+* ordem das palavras
+* pequenas diferenças de escrita
+* sinônimos
+* estilo
+* formatação
+* quantidade de detalhes
+
+## INFORMAÇÕES ADICIONAIS
+
+O agente pode fornecer informações corretas que não aparecem no gabarito.
+
+Essas informações adicionais NÃO tornam a resposta incorreta.
+
+Exemplo:
+
+Pergunta:
+"Qual o preço de Abbey Road?"
+
+Gabarito:
+"O preço é R$ 120."
+
+Agente:
+"O disco custa R$ 120 e foi lançado em 1969 pela gravadora X."
+
+Resultado:
+SIM
+
+Desde que as informações adicionais não contradigam os dados esperados.
+
+## RESPOSTA PARCIAL
+
+Uma resposta parcial deve ser considerada NÃO somente quando uma informação central necessária para responder à pergunta estiver ausente ou incorreta.
+
+Exemplo:
+
+Pergunta:
+"Qual o preço e a gravadora de Abbey Road?"
+
+Gabarito:
+"R$ 120, gravadora X."
+
+Agente:
+"O preço é R$ 120."
+
+Resultado:
+NÃO
+
+O agente forneceu apenas uma parte essencial da resposta.
+
+## INFORMAÇÕES EXTRAS INCORRETAS
+
+Se a resposta principal estiver correta, mas o agente adicionar uma informação factual claramente incorreta ou contraditória, considere:
+
+NÃO
+
+Exemplo:
+
+Gabarito:
+"O preço é R$ 120."
+
+Agente:
+"O preço é R$ 120 e o disco custa R$ 150 na gravadora X."
+
+Resultado:
+NÃO
+
+## PERGUNTAS DE COMPARAÇÃO
+
+Para perguntas que exigem comparação, verifique se a conclusão necessária está correta.
+
+Exemplo:
+
+Pergunta:
+"Atom Heart Mother e Meddle foram lançados no mesmo ano?"
+
+Gabarito:
+"Sim, ambos foram lançados em 1972 pela Harvest."
+
+Agente:
+"Sim, ambos foram lançados em 1972."
+
+Resultado:
+SIM
+
+A ausência da gravadora não é um erro se a pergunta principal era sobre o ano.
+
+## CONTAGEM
+
+Para perguntas sobre quantidade, a quantidade correta é essencial.
+
+Exemplo:
+
+Gabarito:
+"Existem 6 discos diferentes."
+
+Agente:
+"Existem 9 discos."
+
+Resultado:
+NÃO
+
+Não considere uma contagem aproximada como correta.
+
+## FALLBACK
+
+Se o agente responder que não encontrou a informação, considere:
+
+SIM
+
+somente quando o gabarito também indicar que a informação não está disponível ou quando a pergunta realmente não puder ser respondida com os dados fornecidos.
+
+Se o gabarito contém uma resposta concreta e o agente usa o fallback, considere:
+
+NÃO
+
+## CRITÉRIO FINAL
+
+Pergunte mentalmente:
+
+"A resposta do agente contém a informação central necessária para responder à pergunta e ela está correta?"
+
+Se SIM → responda SIM.
+
+Se NÃO → responda NÃO.
+
+A saída deve conter somente SIM ou NÃO.
 """
 
 def obter_nota_do_campeao(client, experiment_id):

@@ -75,8 +75,8 @@
     "difficulty": "facil"
   },
   {
-    "question": "A banda 'Guns N Roses' tem algum disco no catálogo?",
-    "expected_answer": "Sim, 6 discos diferentes",
+    "question": "A banda 'Guns N Roses' tem algum disco no catálogo, se sim, quantos discos de álbuns diferentes?",
+    "expected_answer": "Sim, a banda tem discos disponíveis no catálogo com 6 discos de álbuns diferentes",
     "difficulty": "dificil"
   },
   {
@@ -91,7 +91,7 @@
   },
   {
     "question": "Existem discos da banda 'Titãs' lançados pela gravadora WEA?",
-    "expected_answer": "Sim, o disco 'Titanomaquia' de 1993 foi lançado pela gravadora WEA.",
+    "expected_answer": "Sim, existem 2 discos, os discos 'Titanomaquia' e o 'Tudo Ao Mesmo Tempo Agora' foram lançados pela gravadora WEA.",
     "difficulty": "medio"
   },
   {
@@ -141,7 +141,7 @@
   },
   {
     "question": "O álbum 'Atom Heart Mother' do Pink Floyd foi lançado no mesmo ano que o álbum 'Meddle'?",
-    "expected_answer": "Sim, ambos foram lançados no ano de 1972 pela gravadora Harvest.",
+    "expected_answer": "Sim, ambos foram lançados no ano de 1972.",
     "difficulty": "dificil"
   },
   {
