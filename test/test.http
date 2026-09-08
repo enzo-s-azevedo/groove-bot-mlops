@@ -1,10 +1,10 @@
 ### Testando o Health Check
-GET http://127.0.0.1:8000/
+GET https://api-groove-bot-enzo-dxckg0brada4gng7.centralus-01.azurewebsites.net
 
 ### Testando o Agente LangGraph
-POST http://127.0.0.1:8000/chat
+POST https://api-groove-bot-enzo-dxckg0brada4gng7.centralus-01.azurewebsites.net/chat
 Content-Type: application/json
 
 {
-  "pergunta": "Qual disco do genêro Sertanejo posso comprar com R$ 50,00?"
+  "pergunta": "Qual o disco do genêro Sertanejo mais caro?"
 }
